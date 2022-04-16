@@ -14,4 +14,4 @@ A simple note taking app made with Android Kotlin. For now, there is only the ab
 
 ## Screenshots
 
-<img src="https://user-images.githubusercontent.com/46245749/163672788-d558934f-dec3-4629-a517-c09d43866f77.png" width="24%" height="24%"/> <img src="https://user-images.githubusercontent.com/46245749/163672790-4cddb8cb-aad5-40aa-92d8-ac2cac9cb947.png" width="24%" height="24%"/> <img src="https://user-images.githubusercontent.com/46245749/163672791-b5d3e3f6-f714-43d5-a577-2a409a71773d.png" width="24%" height="24%"/>
+<img src="https://user-images.githubusercontent.com/46245749/163672788-d558934f-dec3-4629-a517-c09d43866f77.png" width="33%" height="33%"/> <img src="https://user-images.githubusercontent.com/46245749/163672790-4cddb8cb-aad5-40aa-92d8-ac2cac9cb947.png" width="33%" height="33%"/> <img src="https://user-images.githubusercontent.com/46245749/163672791-b5d3e3f6-f714-43d5-a577-2a409a71773d.png" width="33%" height="33%"/>
