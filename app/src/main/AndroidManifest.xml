@@ -3,7 +3,7 @@
     package="com.muhammedesadcomert.notes">
 
     <application
-        android:name=".NoteApplication"
+        android:name=".NoteApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Notes">
         <activity
-            android:name="com.muhammedesadcomert.notes.MainActivity"
+            android:name="com.muhammedesadcomert.notes.ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

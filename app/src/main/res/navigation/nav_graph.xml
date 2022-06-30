@@ -6,7 +6,7 @@
     app:startDestination="@id/noteListFragment">
     <fragment
         android:id="@+id/noteListFragment"
-        android:name="com.muhammedesadcomert.notes.NoteListFragment"
+        android:name="com.muhammedesadcomert.notes.ui.note.NotesFragment"
         android:label="Notes"
         tools:layout="@layout/fragment_note_list" >
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/noteDetailFragment"
-        android:name="com.muhammedesadcomert.notes.NoteDetailFragment"
+        android:name="com.muhammedesadcomert.notes.ui.note.NoteDetailFragment"
         android:label="Take Note"
         tools:layout="@layout/fragment_note_detail" />
 </navigation>

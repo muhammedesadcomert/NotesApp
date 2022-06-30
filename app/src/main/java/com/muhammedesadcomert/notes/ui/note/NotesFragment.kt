@@ -1,4 +1,4 @@
-package com.muhammedesadcomert.notes
+package com.muhammedesadcomert.notes.ui.note
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,15 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.muhammedesadcomert.notes.adapter.NoteAdapter
+import com.muhammedesadcomert.notes.NoteApp
 import com.muhammedesadcomert.notes.databinding.FragmentNoteListBinding
 
-class NoteListFragment : Fragment() {
+class NotesFragment : Fragment() {
 
     private lateinit var binding: FragmentNoteListBinding
 
     private val viewModel: NoteViewModel by activityViewModels {
-        NoteViewModelFactory((activity?.application as NoteApplication).database.noteDao())
+        NoteViewModelFactory((activity?.application as NoteApp).database.noteDao())
     }
 
     override fun onCreateView(
@@ -33,7 +33,7 @@ class NoteListFragment : Fragment() {
 
         val adapter = NoteAdapter {
             val action =
-                NoteListFragmentDirections.actionNoteListFragmentToNoteDetailFragment()
+                NotesFragmentDirections.actionNoteListFragmentToNoteDetailFragment()
             val bundle = bundleOf("id" to it.id)
             this.findNavController().navigate(action.actionId, bundle)
         }
@@ -49,7 +49,7 @@ class NoteListFragment : Fragment() {
 
             fab.setOnClickListener {
                 val action =
-                    NoteListFragmentDirections.actionNoteListFragmentToNoteDetailFragment()
+                    NotesFragmentDirections.actionNoteListFragmentToNoteDetailFragment()
                 findNavController().navigate(action)
             }
         }

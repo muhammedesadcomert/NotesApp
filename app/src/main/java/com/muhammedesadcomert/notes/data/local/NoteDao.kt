@@ -1,7 +1,7 @@
-package com.muhammedesadcomert.notes.data
+package com.muhammedesadcomert.notes.data.local
 
 import androidx.room.*
-import com.muhammedesadcomert.notes.model.Note
+import com.muhammedesadcomert.notes.data.model.Note
 import kotlinx.coroutines.flow.Flow
 
 @Dao

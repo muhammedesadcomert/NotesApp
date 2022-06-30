@@ -1,4 +1,4 @@
-package com.muhammedesadcomert.notes
+package com.muhammedesadcomert.notes.ui.note
 
 import android.os.Bundle
 import android.view.*
@@ -8,8 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import com.muhammedesadcomert.notes.NoteApp
+import com.muhammedesadcomert.notes.R
 import com.muhammedesadcomert.notes.databinding.FragmentNoteDetailBinding
-import com.muhammedesadcomert.notes.model.Note
+import com.muhammedesadcomert.notes.data.model.Note
 
 class NoteDetailFragment : Fragment() {
 
@@ -19,7 +21,7 @@ class NoteDetailFragment : Fragment() {
     lateinit var note: Note
 
     private val viewModel: NoteViewModel by activityViewModels {
-        NoteViewModelFactory((activity?.application as NoteApplication).database.noteDao())
+        NoteViewModelFactory((activity?.application as NoteApp).database.noteDao())
     }
 
     override fun onCreateView(

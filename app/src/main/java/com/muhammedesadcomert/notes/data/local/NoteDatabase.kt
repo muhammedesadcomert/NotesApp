@@ -1,24 +1,24 @@
-package com.muhammedesadcomert.notes.data
+package com.muhammedesadcomert.notes.data.local
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.muhammedesadcomert.notes.model.Note
+import com.muhammedesadcomert.notes.data.model.Note
 
 @Database(entities = [Note::class], version = 1, exportSchema = false)
-abstract class NoteRoomDatabase : RoomDatabase() {
+abstract class NoteDatabase : RoomDatabase() {
     abstract fun noteDao(): NoteDao
 
     companion object {
         @Volatile
-        private var INSTANCE: NoteRoomDatabase? = null
+        private var INSTANCE: NoteDatabase? = null
 
-        fun getDatabase(context: Context): NoteRoomDatabase {
+        fun getDatabase(context: Context): NoteDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    NoteRoomDatabase::class.java,
+                    NoteDatabase::class.java,
                     "note_database"
                 ).fallbackToDestructiveMigration().build()
                 INSTANCE = instance
