@@ -23,11 +23,7 @@ class NoteAdapter(private val onItemClicked: (Note) -> Unit) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         return NoteViewHolder(
-            NoteItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
+            NoteItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
     }
 

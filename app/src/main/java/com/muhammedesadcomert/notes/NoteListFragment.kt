@@ -38,10 +38,8 @@ class NoteListFragment : Fragment() {
             this.findNavController().navigate(action.actionId, bundle)
         }
         binding.recyclerView.adapter = adapter
-        viewModel.allNotes.observe(this.viewLifecycleOwner) { notes ->
-            notes.let {
-                adapter.submitList(it)
-            }
+        viewModel.allNotes.observe(this.viewLifecycleOwner) {
+            adapter.submitList(it)
         }
 
         binding.apply {
