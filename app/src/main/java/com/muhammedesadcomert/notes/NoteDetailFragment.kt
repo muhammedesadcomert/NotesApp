@@ -2,8 +2,11 @@ package com.muhammedesadcomert.notes
 
 import android.os.Bundle
 import android.view.*
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.muhammedesadcomert.notes.databinding.FragmentNoteDetailBinding
 import com.muhammedesadcomert.notes.model.Note
@@ -24,7 +27,30 @@ class NoteDetailFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentNoteDetailBinding.inflate(inflater, container, false)
-        setHasOptionsMenu(true)
+
+        val menuHost: MenuHost = requireActivity()
+
+        menuHost.addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.item_detail_action_bar, menu)
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                when (menuItem.itemId) {
+                    R.id.delete -> {
+                        if (noteIsInitialized())
+                            viewModel.deleteNote(note)
+                    }
+                    // on back pressed, go back to the note list fragment
+                    else -> {
+                        saveEntry()
+                    }
+                }
+                findNavController().navigateUp()
+                return true
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+
         return binding.root
     }
 
@@ -42,26 +68,6 @@ class NoteDetailFragment : Fragment() {
                     note = selectedNote
                     bind(note)
                 }
-            }
-        }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.item_detail_action_bar, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.delete -> {
-                if (noteIsInitialized())
-                    viewModel.deleteNote(note)
-                findNavController().navigateUp()
-                true
-            }
-            // NavigateUp
-            else -> {
-                saveEntry()
-                super.onOptionsItemSelected(item)
             }
         }
     }
