@@ -10,11 +10,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.muhammedesadcomert.notes.NoteApp
-import com.muhammedesadcomert.notes.databinding.FragmentNoteListBinding
+import com.muhammedesadcomert.notes.databinding.FragmentNotesBinding
 
 class NotesFragment : Fragment() {
 
-    private lateinit var binding: FragmentNoteListBinding
+    private lateinit var binding: FragmentNotesBinding
 
     private val viewModel: NoteViewModel by activityViewModels {
         NoteViewModelFactory((activity?.application as NoteApp).database.noteDao())
@@ -24,7 +24,7 @@ class NotesFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNoteListBinding.inflate(inflater)
+        binding = FragmentNotesBinding.inflate(inflater)
         return binding.root
     }
 
