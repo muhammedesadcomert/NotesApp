@@ -8,7 +8,7 @@
         android:id="@+id/noteListFragment"
         android:name="com.muhammedesadcomert.notes.ui.note.NotesFragment"
         android:label="Notes"
-        tools:layout="@layout/fragment_note_list" >
+        tools:layout="@layout/fragment_notes" >
         <action
             android:id="@+id/action_noteListFragment_to_noteDetailFragment"
             app:destination="@id/noteDetailFragment" />
