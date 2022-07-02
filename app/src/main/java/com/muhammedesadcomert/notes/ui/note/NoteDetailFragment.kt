@@ -29,7 +29,35 @@ class NoteDetailFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentNoteDetailBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initMenuProvider()
+
+        /**
+         * It is checked to see if there is an incoming id.
+         * Otherwise, title and text will not be filled.
+         */
+        if (requireArguments().get("id") != null) {
+            val id = requireArguments().get("id") as Int
+            viewModel.retrieveNote(id).observe(viewLifecycleOwner) { selectedNote ->
+                if (selectedNote != null) {
+                    note = selectedNote
+                    bind(note)
+                }
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun initMenuProvider() {
         val menuHost: MenuHost = requireActivity()
 
         menuHost.addMenuProvider(object : MenuProvider {
@@ -52,31 +80,6 @@ class NoteDetailFragment : Fragment() {
                 return true
             }
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        /**
-         * It is checked to see if there is an incoming id.
-         * Otherwise, title and text will not be filled.
-         */
-        if (requireArguments().get("id") != null) {
-            val id = requireArguments().get("id") as Int
-            viewModel.retrieveNote(id).observe(viewLifecycleOwner) { selectedNote ->
-                if (selectedNote != null) {
-                    note = selectedNote
-                    bind(note)
-                }
-            }
-        }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun bind(note: Note) {
