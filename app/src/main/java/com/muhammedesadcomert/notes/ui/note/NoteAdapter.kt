@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.muhammedesadcomert.notes.databinding.NoteItemBinding
-import com.muhammedesadcomert.notes.data.model.Note
+import com.muhammedesadcomert.notes.ui.note.model.Note
 
 class NoteAdapter(private val onItemClicked: (Note) -> Unit) :
     ListAdapter<Note, NoteAdapter.NoteViewHolder>(DIFF_CALLBACK) {

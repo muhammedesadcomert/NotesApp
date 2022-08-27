@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.muhammedesadcomert.notes.NoteApp
 import com.muhammedesadcomert.notes.R
 import com.muhammedesadcomert.notes.databinding.FragmentNoteDetailBinding
-import com.muhammedesadcomert.notes.data.model.Note
+import com.muhammedesadcomert.notes.ui.note.model.Note
 
 class NoteDetailFragment : Fragment() {
 

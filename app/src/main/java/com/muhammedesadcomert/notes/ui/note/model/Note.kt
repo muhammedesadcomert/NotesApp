@@ -1,4 +1,4 @@
-package com.muhammedesadcomert.notes.data.model
+package com.muhammedesadcomert.notes.ui.note.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -2,7 +2,7 @@ package com.muhammedesadcomert.notes.ui.note
 
 import androidx.lifecycle.*
 import com.muhammedesadcomert.notes.data.local.NoteDao
-import com.muhammedesadcomert.notes.data.model.Note
+import com.muhammedesadcomert.notes.ui.note.model.Note
 import kotlinx.coroutines.launch
 
 class NoteViewModel(private val noteDao: NoteDao) : ViewModel() {
