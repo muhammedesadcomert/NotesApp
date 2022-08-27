@@ -5,14 +5,15 @@ import android.view.*
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
-import com.muhammedesadcomert.notes.NoteApp
 import com.muhammedesadcomert.notes.R
 import com.muhammedesadcomert.notes.databinding.FragmentNoteDetailBinding
 import com.muhammedesadcomert.notes.ui.note.model.Note
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NoteDetailFragment : Fragment() {
 
     private var _binding: FragmentNoteDetailBinding? = null
@@ -20,9 +21,7 @@ class NoteDetailFragment : Fragment() {
 
     lateinit var note: Note
 
-    private val viewModel: NoteViewModel by activityViewModels {
-        NoteViewModelFactory((activity?.application as NoteApp).database.noteDao())
-    }
+    private val viewModel: NoteViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,11 +42,9 @@ class NoteDetailFragment : Fragment() {
          */
         if (requireArguments().get("id") != null) {
             val id = requireArguments().get("id") as Int
-            viewModel.retrieveNote(id).observe(viewLifecycleOwner) { selectedNote ->
-                if (selectedNote != null) {
-                    note = selectedNote
-                    bind(note)
-                }
+            viewModel.retrieveNote(id).let { selectedNote ->
+                note = selectedNote
+                bind(note)
             }
         }
     }

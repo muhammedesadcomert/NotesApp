@@ -1,8 +1,7 @@
 package com.muhammedesadcomert.notes
 
 import android.app.Application
-import com.muhammedesadcomert.notes.data.local.NoteDatabase
+import dagger.hilt.android.HiltAndroidApp
 
-class NoteApp : Application() {
-    val database: NoteDatabase by lazy { NoteDatabase.getDatabase(this) }
-}
+@HiltAndroidApp
+class NoteApp : Application()

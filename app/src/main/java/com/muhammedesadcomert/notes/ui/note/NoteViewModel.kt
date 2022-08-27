@@ -1,17 +1,22 @@
 package com.muhammedesadcomert.notes.ui.note
 
-import androidx.lifecycle.*
-import com.muhammedesadcomert.notes.data.local.NoteDao
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.muhammedesadcomert.notes.data.repository.NoteRepository
 import com.muhammedesadcomert.notes.ui.note.model.Note
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NoteViewModel(private val noteDao: NoteDao) : ViewModel() {
+@HiltViewModel
+class NoteViewModel @Inject constructor(private val noteRepository: NoteRepository) : ViewModel() {
 
-    val allNotes: LiveData<List<Note>> = noteDao.getNotes().asLiveData()
+    val notes: LiveData<List<Note>> get() = noteRepository.getNotes()
 
     private fun insertNote(note: Note) {
         viewModelScope.launch {
-            noteDao.insert(note)
+            noteRepository.insert(note)
         }
     }
 
@@ -29,7 +34,7 @@ class NoteViewModel(private val noteDao: NoteDao) : ViewModel() {
 
     private fun updateNote(note: Note) {
         viewModelScope.launch {
-            noteDao.update(note)
+            noteRepository.update(note)
         }
     }
 
@@ -48,27 +53,15 @@ class NoteViewModel(private val noteDao: NoteDao) : ViewModel() {
 
     fun deleteNote(note: Note) {
         viewModelScope.launch {
-            noteDao.delete(note)
+            noteRepository.delete(note)
         }
     }
 
-    fun retrieveNote(id: Int): LiveData<Note> {
-        return noteDao.getNote(id).asLiveData()
-    }
+    fun retrieveNote(id: Int) = noteRepository.getNote(id)
 
     fun isEntryValid(noteTitle: String, noteText: String): Boolean {
         if (noteTitle.isBlank() || noteText.isBlank())
             return false
         return true
-    }
-}
-
-class NoteViewModelFactory(private val itemDao: NoteDao) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(NoteViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
-            return NoteViewModel(itemDao) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

@@ -2,6 +2,7 @@ package com.muhammedesadcomert.notes.ui.note
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +15,7 @@ class NoteAdapter(private val onItemClicked: (Note) -> Unit) :
     inner class NoteViewHolder(private val binding: NoteItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(note: Note) {
-            binding.apply {
+            with(binding) {
                 noteTitle.text = note.title
                 noteText.text = note.text
             }
@@ -28,12 +29,16 @@ class NoteAdapter(private val onItemClicked: (Note) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        val note = getItem(position)
+        val note = differ.currentList[position]
         holder.bind(note)
         holder.itemView.setOnClickListener {
             onItemClicked(note)
         }
     }
+
+    val differ = AsyncListDiffer(this, DIFF_CALLBACK)
+
+    override fun getItemCount() = differ.currentList.size
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Note>() {
