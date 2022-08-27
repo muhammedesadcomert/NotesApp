@@ -5,12 +5,13 @@ A simple note taking app made with Android Kotlin. For now, there is only the ab
 ## 🛠 Tech Stack
 
 - [Kotlin](https://kotlinlang.org/)
-- [Kotlin Flows](https://developer.android.com/kotlin/flow)
-- [Kotlin Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html)
+- [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html)
 - [Navigation Component](https://developer.android.com/guide/navigation)
 - [View Model](https://developer.android.com/topic/libraries/architecture/viewmodel)
 - [Live Data](https://developer.android.com/topic/libraries/architecture/livedata)
 - [Room](https://developer.android.com/jetpack/androidx/releases/room)
+- [Hilt](https://developer.android.com/training/dependency-injection/hilt-android)
+- [Material Design 3](https://m3.material.io/)
 
 ## Screenshots
 
