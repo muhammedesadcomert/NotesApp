@@ -1,18 +1,18 @@
 package com.muhammedesadcomert.notes.ui.note
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.muhammedesadcomert.notes.data.repository.NoteRepository
 import com.muhammedesadcomert.notes.ui.note.model.Note
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class NoteViewModel @Inject constructor(private val noteRepository: NoteRepository) : ViewModel() {
 
-    val notes: LiveData<List<Note>> get() = noteRepository.getNotes()
+    var notes: Flow<List<Note>> = noteRepository.getNotes()
 
     private fun insertNote(note: Note) {
         viewModelScope.launch {

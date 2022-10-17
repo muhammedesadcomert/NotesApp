@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.muhammedesadcomert.notes.databinding.FragmentNotesBinding
@@ -39,8 +40,10 @@ class NotesFragment : Fragment() {
 
         binding.recyclerView.adapter = adapter
 
-        viewModel.notes.observe(viewLifecycleOwner) {
-            adapter.differ.submitList(it)
+        lifecycle.coroutineScope.launchWhenCreated {
+            viewModel.notes.collect() {
+                adapter.differ.submitList(it)
+            }
         }
 
         binding.apply {

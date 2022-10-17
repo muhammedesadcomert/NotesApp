@@ -1,8 +1,8 @@
 package com.muhammedesadcomert.notes.data.repository
 
-import androidx.lifecycle.LiveData
 import com.muhammedesadcomert.notes.data.local.NoteDao
 import com.muhammedesadcomert.notes.ui.note.model.Note
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class NoteRepository @Inject constructor(private val noteDao: NoteDao) {
@@ -14,5 +14,5 @@ class NoteRepository @Inject constructor(private val noteDao: NoteDao) {
 
     fun getNote(id: Int): Note = noteDao.getNote(id)
 
-    fun getNotes(): LiveData<List<Note>> = noteDao.getNotes()
+    fun getNotes(): Flow<List<Note>> = noteDao.getNotes()
 }
