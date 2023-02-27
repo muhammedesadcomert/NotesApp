@@ -7,15 +7,15 @@ import com.muhammedesadcomert.notes.data.local.NoteDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
-@InstallIn(SingletonComponent::class)
-object AppModule {
+@InstallIn(ViewModelComponent::class)
+object DatabaseModule {
     @Provides
-    @Singleton
+    @ViewModelScoped
     fun provideLocalDatabase(
         @ApplicationContext context: Context
     ): NoteDatabase =
@@ -26,6 +26,6 @@ object AppModule {
         ).allowMainThreadQueries().build()
 
     @Provides
-    @Singleton
+    @ViewModelScoped
     fun provideNoteDao(noteDatabase: NoteDatabase): NoteDao = noteDatabase.noteDao()
 }
