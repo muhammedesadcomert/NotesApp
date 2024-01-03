@@ -2,17 +2,19 @@ package com.muhammedesadcomert.notes.ui.note
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.muhammedesadcomert.notes.data.local.model.Note
 import com.muhammedesadcomert.notes.data.repository.NoteRepository
-import com.muhammedesadcomert.notes.ui.note.model.Note
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class NoteViewModel @Inject constructor(private val noteRepository: NoteRepository) : ViewModel() {
 
-    var notes: Flow<List<Note>> = noteRepository.getNotes()
+    val notes: Flow<List<Note>> = noteRepository.getNotes()
+    val note = MutableStateFlow<Note?>(null)
 
     private fun insertNote(note: Note) {
         viewModelScope.launch {
@@ -57,11 +59,15 @@ class NoteViewModel @Inject constructor(private val noteRepository: NoteReposito
         }
     }
 
-    fun retrieveNote(id: Int) = noteRepository.getNote(id)
+    fun retrieveNote(id: Int) {
+        viewModelScope.launch {
+            noteRepository.getNote(id).collect {
+                note.value = it
+            }
+        }
+    }
 
     fun isEntryValid(noteTitle: String, noteText: String): Boolean {
-        if (noteTitle.isBlank() || noteText.isBlank())
-            return false
-        return true
+        return !(noteTitle.isBlank() || noteText.isBlank())
     }
 }

@@ -1,17 +1,24 @@
 package com.muhammedesadcomert.notes.ui.note
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.muhammedesadcomert.notes.R
+import com.muhammedesadcomert.notes.data.local.model.Note
 import com.muhammedesadcomert.notes.databinding.FragmentNoteDetailBinding
-import com.muhammedesadcomert.notes.ui.note.model.Note
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class NoteDetailFragment : Fragment() {
@@ -40,11 +47,15 @@ class NoteDetailFragment : Fragment() {
          * It is checked to see if there is an incoming id.
          * Otherwise, title and text will not be filled.
          */
-        if (requireArguments().get("id") != null) {
-            val id = requireArguments().get("id") as Int
-            viewModel.retrieveNote(id).let { selectedNote ->
-                note = selectedNote
-                bind(note)
+        val id = requireArguments().getInt("id")
+        viewModel.retrieveNote(id)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.note.collect { selectedNote ->
+                selectedNote?.let {
+                    note = selectedNote
+                    bind(note)
+                }
             }
         }
     }

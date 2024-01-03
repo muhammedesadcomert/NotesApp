@@ -2,12 +2,11 @@ package com.muhammedesadcomert.notes.ui.note
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.muhammedesadcomert.notes.data.local.model.Note
 import com.muhammedesadcomert.notes.databinding.NoteItemBinding
-import com.muhammedesadcomert.notes.ui.note.model.Note
 
 class NoteAdapter(private val onItemClicked: (Note) -> Unit) :
     ListAdapter<Note, NoteAdapter.NoteViewHolder>(DIFF_CALLBACK) {
@@ -29,21 +28,19 @@ class NoteAdapter(private val onItemClicked: (Note) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        val note = differ.currentList[position]
+        val note = currentList[position]
         holder.bind(note)
         holder.itemView.setOnClickListener {
             onItemClicked(note)
         }
     }
 
-    val differ = AsyncListDiffer(this, DIFF_CALLBACK)
-
-    override fun getItemCount() = differ.currentList.size
+    override fun getItemCount() = currentList.size
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Note>() {
             override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
-                return oldItem == newItem
+                return oldItem.id == newItem.id
             }
 
             override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {

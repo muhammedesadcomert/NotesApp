@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.coroutineScope
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.muhammedesadcomert.notes.databinding.FragmentNotesBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class NotesFragment : Fragment() {
@@ -32,28 +33,24 @@ class NotesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = NoteAdapter {
-            val action =
-                NotesFragmentDirections.actionNoteListFragmentToNoteDetailFragment()
+            val action = NotesFragmentDirections.actionNoteListFragmentToNoteDetailFragment()
             val bundle = bundleOf("id" to it.id)
             this.findNavController().navigate(action.actionId, bundle)
         }
 
-        binding.recyclerView.adapter = adapter
-
-        lifecycle.coroutineScope.launchWhenCreated {
-            viewModel.notes.collect() {
-                adapter.differ.submitList(it)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.notes.collect {
+                adapter.submitList(it)
             }
         }
 
-        binding.apply {
-            recyclerView.layoutManager =
-                StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        with(binding) {
+            recyclerView.adapter = adapter
+            recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             recyclerView.setHasFixedSize(true)
 
             fab.setOnClickListener {
-                val action =
-                    NotesFragmentDirections.actionNoteListFragmentToNoteDetailFragment()
+                val action = NotesFragmentDirections.actionNoteListFragmentToNoteDetailFragment()
                 findNavController().navigate(action)
             }
         }
