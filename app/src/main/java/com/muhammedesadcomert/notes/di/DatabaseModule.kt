@@ -23,7 +23,7 @@ object DatabaseModule {
             context,
             NoteDatabase::class.java,
             "note_database"
-        ).allowMainThreadQueries().build()
+        ).build()
 
     @Provides
     @ViewModelScoped
